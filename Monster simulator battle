@@ -1,0 +1,78 @@
+#include<iostream>
+using namespace std;
+
+//function declaration
+void BattleSim();
+int playerHealth = 100;
+
+int main() {
+	srand(time(NULL));
+	int room = 1;
+	char input;
+	while (playerHealth >0 ) { //game loop
+		switch (room) {
+		case 1:
+			cout << "you're in room 1, you can go (s)outh" << endl;
+			cin >> input;
+			if (input == 's')
+				room = 2;
+			break;
+		case 2:
+			BattleSim();
+			cout << "you're in room 1, you can go (s)outh or (n)orth" << endl;
+			cin >> input;
+			if (input == 's')
+				room = 3;
+			else if (input == 'n')
+				room = 1;
+			break;
+		case 3:
+			cout << "you're in room 3, you can go (n)orth" << endl;
+			cin >> input;
+			if (input == 'n')
+				room = 2;
+			break;
+
+		}
+	}
+	if (playerHealth <= 0)
+		cout << "game over. (sad trumpet noise)" << endl;
+	else
+		cout << "congrats, you won!" << endl;
+} //end main
+
+void BattleSim() {
+	int MonsterHealth = 20; //LOCAL variable: can only be seen and used by this function!
+	int damage;
+	char dummy;
+	cout << endl << endl << "------------Monster Battle----------------";
+	cout << "an ogre attacks!" << endl;
+	while (playerHealth > 0 && MonsterHealth > 0) {
+		//players attack
+		damage = rand() % 21; //number between 0 and 20
+		cout << "you hit the monster for 10 dmg" << endl;
+		MonsterHealth -= damage;
+		cout << "the monster hits you for 20 dmg" << endl;
+		cin >> dummy;
+		playerHealth -= 10;
+
+		cout << "the monster hits you for" << damage << " damage." << endl;
+		playerHealth -= damage;
+		cout << "press any key to continue.." << endl;
+		cin >> dummy;
+
+		//printing heakth values
+		if (playerHealth > 0)
+			cout << "your Health: " << playerHealth << endl;
+		else
+			cout << "you died" << endl;
+
+		if (MonsterHealth > 0)
+			cout << "Monster health: ";
+		cout << "Your health:" << playerHealth << endl;
+		cout << "Monster health:" << MonsterHealth << endl; //optional
+		cout << "press any key to continue..." << endl;
+		cin >> dummy;
+	}//end of mini loop
+	cout << "--------------------------------end of battle---------------------" << endl << endl;
+}
